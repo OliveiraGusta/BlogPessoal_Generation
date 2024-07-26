@@ -60,7 +60,7 @@ public class PostController {
 		
 		if(post.isEmpty())
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		
+
 			postRepository.deleteById(id);
 	}
 	
