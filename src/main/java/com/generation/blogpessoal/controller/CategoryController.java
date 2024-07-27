@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,72 +18,61 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.generation.blogpessoal.model.Post;
+import com.generation.blogpessoal.model.Category;
 import com.generation.blogpessoal.repository.CategoryRepository;
-import com.generation.blogpessoal.repository.PostRepository;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/categories")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class PostController {
-	
-	@Autowired
-	private PostRepository postRepository;
+public class CategoryController {
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
 	@GetMapping
-	public ResponseEntity<List<Post>> getall(){
-		return ResponseEntity.ok(postRepository.findAll());
+	public ResponseEntity<List<Category>> getall(){
+		return ResponseEntity.ok(categoryRepository.findAll());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Post> getById(@PathVariable Long id){
-		return postRepository.findById(id)
+	public ResponseEntity<Category> getById(@PathVariable Long id){
+		return categoryRepository.findById(id)
 				.map(response -> ResponseEntity.ok(response))
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 
-	@GetMapping("/title/{title}")
-	public ResponseEntity<List<Post>> getByTitle(@PathVariable String title){
-		return ResponseEntity.ok(postRepository.findAllByTitleContainingIgnoreCase(title));
+	@GetMapping("/description/{description}")
+	public ResponseEntity<List<Category>> getByTitle(@PathVariable String description){
+		return ResponseEntity.ok(categoryRepository.findAllByDescriptionContainingIgnoreCase(description));
 	}
 	
 	@PostMapping
-	public ResponseEntity<Post> post(@Valid @RequestBody Post post){
-		if(categoryRepository.existsById(post.getCategory().getId()))
-			return ResponseEntity.status(HttpStatus.CREATED)
-				.body(postRepository.save(post));
-		
-		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Categoria não existe!", null);
+	public ResponseEntity<Category> post(@Valid @RequestBody Category category){
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(categoryRepository.save(category));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Post> put(@Valid @RequestBody Post post) {
-		if(postRepository.existsById(post.getId())) {
-
-		if(categoryRepository.existsById(post.getCategory().getId()))
-			return ResponseEntity.status(HttpStatus.OK)
-					.body(postRepository.save(post));
-				
-		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();	}
+	public ResponseEntity<Category> put(@Valid @RequestBody Category category) {
+		return categoryRepository.findById(category.getId())
+				.map(response -> ResponseEntity.status(HttpStatus.OK)
+						.body(categoryRepository.save(category)))
+				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+	}
+	
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
-		Optional<Post> post = postRepository.findById(id);
+		Optional<Category> category = categoryRepository.findById(id);
 		
-		if(post.isEmpty())
+		if(category.isEmpty())
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
-			postRepository.deleteById(id);
+			categoryRepository.deleteById(id);
 	}
 	
-	
-
 	
 }

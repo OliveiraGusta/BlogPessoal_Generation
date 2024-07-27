@@ -44,6 +44,14 @@ public class Category {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public List<Post> getPost() {
+		return post;
+	}
+
+	public void setPost(List<Post> post) {
+		this.post = post;
+	}
 	
 	
 
