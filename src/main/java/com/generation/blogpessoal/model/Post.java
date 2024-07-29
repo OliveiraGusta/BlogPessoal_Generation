@@ -30,12 +30,18 @@ public class Post {
 	@Size(min = 3, max = 100, message = "O atributo TEXTO deve conter no minimo 03 e no maximo 100 caracteres")
 	private String text;
 	
+
 	@UpdateTimestamp
 	private LocalDateTime date;
 
 	@ManyToOne
 	@JsonIgnoreProperties("post")
 	private Category category;
+	
+
+	@ManyToOne
+	@JsonIgnoreProperties("post")
+	private User user;
 	
 	public Long getId() {
 		return id;
@@ -77,5 +83,12 @@ public class Post {
 		this.category = category;
 	}
 	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 	
 }
