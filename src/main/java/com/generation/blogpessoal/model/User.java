@@ -32,7 +32,7 @@ public class User {
 	private String email;
 	
 	@NotBlank(message = "O atributo PASSWORD é Obrigatorio")
-	@Size(min = 6, max = 50, message = "O atributo PASSWORD deve conter no minimo 6 e no maximo 50 caracteres ")
+	@Size(min = 6, max = 100, message = "O atributo PASSWORD deve conter no minimo 6 e no maximo 50 caracteres ")
 	private String password;
 	
 	@Size(min = 2, max = 5000, message = "O atributo PHOTO deve conter no minimo 2 e no maximo 5000 caracteres ")
