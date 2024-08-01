@@ -1,11 +1,13 @@
 package com.generation.blogpessoal.security;
 import java.security.Key;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -13,6 +15,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
+@Service
 public class JwtService {
 	public static final String SECRET = "74fa7b4b32ecdbe8a5d148c782fea407ed7aec6670474d92175d59d3b50cd1d1";
 	
