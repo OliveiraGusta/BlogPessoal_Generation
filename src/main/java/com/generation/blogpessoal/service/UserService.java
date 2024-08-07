@@ -62,6 +62,7 @@ public class UserService {
         
 		var credentialsToken = new UsernamePasswordAuthenticationToken(userLogin.get().getEmail(), userLogin.get().getPassword());
 		
+		
 		Authentication authentication = authenticationManager.authenticate(credentialsToken);
         
 		if (authentication.isAuthenticated()) {
