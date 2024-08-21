@@ -42,7 +42,17 @@ public class User {
 	@JsonIgnoreProperties("post")
 	private List<Post> post;
 	
-
+	public User(Long id, String name, String email, String password, String photo) {
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.photo = photo;
+	}
+	
+	public User() { }
+	
+	
 	public void setPost(List<Post> post) {
 		this.post = post;
 	}
